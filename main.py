@@ -1,8 +1,9 @@
 import uvicorn
 from fastapi import FastAPI
+from flask_pymongo import MongoClient
 
 app = FastAPI()
-
+MongoURL = "mongodb+srv://JayBhakhar:jay456789@schedulesamsmu.uczju06.mongodb.net/"
 
 @app.get("/")
 def read_root():
