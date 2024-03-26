@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from flask_pymongo import MongoClient
 import pandas as pd
 import uuid
-from datetime import date, datetime
+import consts
 
 app = FastAPI()
 MongoURL = "mongodb+srv://JayBhakhar:jay456789@schedulesamsmu.uczju06.mongodb.net/"
@@ -24,36 +24,21 @@ def addData():
 
 '''
 arguments of get requst
-db.collection.find({
-    day: {
-        $gt: ISODate("2020-01-21"),
-        $lt: ISODate("2020-01-24")
-    }
-})'group_name':301,
 groupID - str, week - int
 '''
 
 @app.get("/")
 # def Schudule(group_name, week):
-def Schudule():
-    week = 0
-    if week == 0:
-        print(date.today().weekday())
-        startYear, startMonth, startDay = date.today().year, date.today().month, date.today().day + 6
-        startDate = datetime(startYear, startMonth, startDay)
-    """
-    convert week int to date
-    function which will return week schdule by week int
-    """
-    date_time = 0
+def Schudule():     
+    # date_time = 0
+    searchquery = consts.SearchQuery(week = 0)
+    print(searchquery)
     output = []
-    # for schdule in SchduleSaMSMUCollection.find({"groupID": groupID, "date_time": date_time}):
-    for schdule in SchduleSaMSMUCollection.find({'group_name':301,'date': startDate}):
-        output.append(schdule)
+    for schdule in SchduleSaMSMUCollection.find({"groupID": 301, "date_time": searchquery}):    
+        output.append(schdule)   
     """
     output: list return of schdule of one week of group
     """
-    # print(output[0])
     return {'Schdule': output}
 
 """
