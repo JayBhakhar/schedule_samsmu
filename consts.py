@@ -42,12 +42,22 @@ for i in range(len(facultyList)):
 def SearchQuery(week):
     startDate = 0
     endDate = 0
-    if week == 0:      
-      year, month, day = date.today().year, date.today().month, date.today().day     
-      startWeek = date.today().weekday()+1 
+    if week == 0:   
+      year, month, day = date.today().year, date.today().month, date.today().day 
+      startWeek = date.today().weekday()+1 % date.today().day
       try:
           if year == 2024:
-            if date.today().month == 4:
+            if month == 3:
+              if day == 29 :
+                startDate = datetime(year, month, day-3)
+                endDate = datetime(year, month, day+2)
+              elif day == 30 :
+                startDate = datetime(year, month, day-4)
+                endDate = datetime(year, month, day+1)
+              else:
+                startDate = datetime(year, month, day-5)
+                endDate = datetime(year, month, day)
+            if month == 4:
               if startWeek == 1:
                 if day == 29 :
                   startDate = datetime(year, month, day)
@@ -66,7 +76,7 @@ def SearchQuery(week):
                 startDate = datetime(year, month, day-2)
                 endDate = datetime(year, month, day+3)
               elif startWeek == 4:
-                startDate = datetime(year, month, day-3)
+                startDate = datetime(year, month, day-3)                
                 endDate = datetime(year, month, day+2)
               elif startWeek == 5:
                 startDate = datetime(year, month, day-4)
@@ -81,7 +91,7 @@ def SearchQuery(week):
                 else:
                   startDate = datetime(year, month, day+1)
                   endDate = datetime(year, month, day+6)
-            elif date.today().month == 5:
+            elif month == 5:
               if startWeek == 1:
                 if day == 27 :
                   startDate = datetime(year, month, day)
@@ -140,7 +150,7 @@ def SearchQuery(week):
                 else:
                   startDate = datetime(year, month, day+1)
                   endDate = datetime(year, month, day+6)
-            elif date.today().month == 6:
+            elif month == 6:
               if startWeek == 1:                
                 startDate = datetime(year, month, day)
                 endDate = datetime(year, month, day+5)
