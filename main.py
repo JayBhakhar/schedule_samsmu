@@ -10,7 +10,7 @@ MongoURL = "mongodb+srv://JayBhakhar:jay456789@schedulesamsmu.uczju06.mongodb.ne
 SchduleSaMSMUCollection = MongoClient(MongoURL).datadase.SchduleSaMSMU
 GroupCollection = MongoClient(MongoURL).datadase.GroupSAMSMU
 
-def addData():
+def addSchdule():
     data = pd.read_excel(r'schdule.xlsx')
     # TODO: merge data and time
     df = data[['date','time','subject_name','group_name','address','teacher_name','room_no','type']] 
@@ -21,6 +21,18 @@ def addData():
     df.replace({pd.NaT: None})
     results = df.to_dict(orient="records")
     SchduleSaMSMUCollection.insert_many(results)
+
+def addGroup():    
+    GroupCollection.find_one_and_update(
+        {
+            '_id':2,
+        },
+        { "$set":
+          {
+              'Педиатрия': "['1st year'],['2nd year'],['3rd year'],['4th year'],['5th year'],['6th year']"
+          } 
+        }
+    )
 
 '''
 arguments of get requst
@@ -34,7 +46,7 @@ def Schudule():
     searchquery = consts.SearchQuery(week = 0)
     print(searchquery)
     output = []
-    for schdule in SchduleSaMSMUCollection.find({"groupID": 301, "date_time": searchquery}):    
+    for schdule in SchduleSaMSMUCollection.find({"group_name": 301, "date": searchquery}):
         output.append(schdule)   
     """
     output: list return of schdule of one week of group
@@ -44,17 +56,15 @@ def Schudule():
 """
 arguments of get requst
 facultID- int
-
+"facultID": 'Лечебное дело'
 """
 
 @app.get("/groupList")
-def Group(facultID):
+def Group():
     output = []
-    for group in GroupCollection.find({"facultID": facultID}):
-        output.append(group)
-    """
-    output: [{1:"301"}, {2:"302"}, {3:"303"}]
-    """
+    addGroup()
+    for group in GroupCollection.find({"_id": 2}):
+        output.append(group)   
     return {'group_list': output}
 
 

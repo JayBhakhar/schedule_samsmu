@@ -24,7 +24,8 @@ type - str
 """
 
 
-facultyList = ['Лечебное дело',
+facultyList = [
+  'Лечебное дело',
   'Педиатрия',
   'Стоматология',
   'Медико-профилактическое дело',
@@ -34,7 +35,8 @@ facultyList = ['Лечебное дело',
   'Сестринское Дело',
   'General Medicine',
   'Dentistry',
-  'Pharmacy'],
+  'Pharmacy'
+  ],
 
 for i in range(len(facultyList)):
     faculty_dic[i] = facultyList[i]
@@ -44,11 +46,14 @@ def SearchQuery(week):
     endDate = 0
     if week == 0:   
       year, month, day = date.today().year, date.today().month, date.today().day 
-      startWeek = date.today().weekday()+1 % date.today().day
+      startWeek = date.today().weekday()+1 % day
       try:
           if year == 2024:
             if month == 3:
-              if day == 29 :
+              if day == 28 :
+                startDate = datetime(year, month, day-2)
+                endDate = datetime(year, month, day+3)
+              elif day == 29 :
                 startDate = datetime(year, month, day-3)
                 endDate = datetime(year, month, day+2)
               elif day == 30 :
@@ -187,6 +192,10 @@ def SearchQuery(week):
     """
     convert week int to date
     function which will return week schdule by week int
+    """
+    """
+    Лечебное дело group list = ["1st year"],[201],[301,"F301","Л301","И301",302,"F302","Л302", "И302",303, "F303", "Л303", "И303",304, "F304", "Л304",	305, "F305", "Л305",306, "F306", "Л306",307, "F307", "Л307",308, "F308", "Л308",309, "F309",310, "F310",311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328]
+    ['1st year'],['2nd year'],['3rd year'],['4th year'],['5th year'],['6th year']
     """
         
         
