@@ -13,7 +13,7 @@ GroupCollection = MongoClient(MongoURL).datadase.GroupSAMSMU
 def addSchdule():
     data = pd.read_excel(r'schdule.xlsx')
     # TODO: merge data and time
-    df = data[['date','time','subject_name','group_name','address','teacher_name','room_no','type']] 
+    df = data[['date','time','subject_name','group_name','address','teacher_name','room_no','type']]
     df['_id'] = 0
     for i in range(len(df['_id'])):
         df.loc[i, '_id'] = str(uuid.uuid4())
@@ -29,7 +29,7 @@ def addGroup():
         },
         { "$set":
           {
-              'Педиатрия': "['1st year'],['2nd year'],['3rd year'],['4th year'],['5th year'],['6th year']"
+            'Педиатрия': "['1st year'],['2nd year'],['3rd year'],['4th year'],['5th year'],['6th year']"
           } 
         }
     )
@@ -53,21 +53,14 @@ def Schudule():
     """
     return {'Schdule': output}
 
-"""
-arguments of get requst
-facultID- int
-"facultID": 'Лечебное дело'
-"""
 
 @app.get("/groupList")
-def Group():
+def Group(id):
     output = []
-    addGroup()
-    for group in GroupCollection.find({"_id": 2}):
+    for group in GroupCollection.find({"_id": int(id)}):
         output.append(group)   
     return {'group_list': output}
 
 
 if __name__ == "__main__":
     uvicorn.run("main:app", port=5000, reload=True)
-
