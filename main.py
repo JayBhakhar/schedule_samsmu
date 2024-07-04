@@ -6,7 +6,7 @@ import uuid
 import consts
 
 app = FastAPI()
-MongoURL = "mongodb+srv://JayBhakhar:jay456789@schedulesamsmu.uczju06.mongodb.net/"
+MongoURL = DATABASE_LINK
 SchduleSaMSMUCollection = MongoClient(MongoURL).datadase.SchduleSaMSMU
 GroupCollection = MongoClient(MongoURL).datadase.GroupSAMSMU
 
