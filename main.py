@@ -34,23 +34,12 @@ def addGroup():
         }
     )
 
-'''
-arguments of get requst
-groupID - str, week - int
-'''
-
 @app.get("/")
-# def Schudule(group_name, week):
-def Schudule():     
-    # date_time = 0
+def Schudule():
     searchquery = consts.SearchQuery(week = 0)
-    print(searchquery)
     output = []
     for schdule in SchduleSaMSMUCollection.find({"group_name": 301, "date": searchquery}):
-        output.append(schdule)   
-    """
-    output: list return of schdule of one week of group
-    """
+        output.append(schdule)
     return {'Schdule': output}
 
 
